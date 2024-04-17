@@ -1,0 +1,909 @@
+@use "sass:math";
+
+$btnWidth: 23px;
+$btnHeight: 2px;
+
+// mixin
+@mixin breakpoint($point) {
+    @if $point==PC1280 {
+        @media (max-width: 1280px) {
+            @content ;
+        }
+    }
+
+    @if $point==PC1260 {
+        @media (max-width: 1260px) {
+            @content ;
+        }
+    }
+
+    @if $point==PC1200 {
+        @media (max-width: 1200px) {
+            @content ;
+        }
+    }
+
+    @if $point==tablet {
+        @media (max-width: 1078px) {
+            @content ;
+        }
+    }
+
+    @if $point==mobile {
+        @media (max-width: 767px) {
+            @content ;
+        }
+    }
+}
+
+html {
+    font-size: 62.5%; /*ベースを16px→10pxにする*/
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+head {
+    display: none;
+}
+
+body {
+    line-height: 1.7;
+    font-size: 1.6rem;
+    font-family: "Noto Sans JP", MyYuGothicM, YuGothic, -apple-system, BlinkMacSystemFont, "Hiragino kaku Gothic ProN", Meiryo, Verdana, arial, helvetica, sans-serif;
+    color: #121212;
+    -webkit-text-size-adjust: 100%;
+    font-weight: 400;
+    display: block;
+}
+
+img {
+    max-width: 100%;
+    vertical-align: middle;
+    border-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+h1, h2, h3, h4, h5, h6, figure {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+
+    &.Btn {
+        margin: 0 10px 1em 5px;
+        line-height: 1;
+        display: inline-block;
+    }    
+}
+
+ul, ol {
+    list-style-type: none;
+}
+
+ul {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+
+    ul {
+        list-style-type: circle;
+        margin-block-start: 0px;
+        margin-block-end: 0px;
+    }
+
+    &.sub-menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        z-index: 1000;
+
+        &.close {
+            display: none;
+        }
+
+        li {
+            font-weight: normal;
+            background-color: #E9F8FB;
+        }
+
+        li a {
+            position: relative;
+            padding: 15px 60px 15px 15px;
+            height: auto;
+        }
+
+        ul li {
+            position: relative;
+            white-space: nowrap;
+        }
+    }
+}
+
+a {
+    text-decoration: none;
+    background-color: transparent;
+
+    &:link {
+        color: #2498B3;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+    }
+
+    &:focus {
+        color: #2498B3;
+        text-decoration: none;
+    }
+
+    &:hover {
+        color: #2498B3;
+        text-decoration: none;
+    }
+}
+
+b, strong {
+    font-weight: bolder;
+}
+
+ol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:root {
+    --wp-admin-theme-color: #007cba;
+    --wp-admin-theme-color-darker-10: #006ba1;
+    --wp-admin-theme-color-darker-20: #005a87;
+}
+
+.Header {
+    width: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    background: #FFFFFF;
+    z-index: 1100;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .Header__title {
+        margin: 0 0 0 21px;
+        width: 160px;
+
+        @include breakpoint(PC1200) {
+            margin: 10px;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
+        p a {
+            line-height: 1.3;
+            font-weight: 900;
+            height: 70px;
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-transition: 0.3s;
+            transition: 0.3s;
+
+            @include breakpoint(PC1200) {
+                height: 30px;
+            }
+        }
+
+        p a:visited {
+            color: #131D34;
+            text-decoration: none;
+        }
+
+        p a span {
+            margin-left: 16px;
+            white-space: nowrap;
+            font-size: 14px;
+            font-size: 1.4rem;
+            color: #131D34;
+            text-decoration: none;
+
+            @include breakpoint(PC1280) {
+                display: none;
+            }
+            
+        }
+
+        p strong {
+            font-size: 1.8rem;
+        }
+
+        p img {
+            height: 33px;
+            width: auto;
+
+            @include breakpoint(PC1200) {
+                height: 30px;
+            }
+        }
+    }
+}
+
+.Nav {
+    font-weight: 700;
+
+    &__btn {
+        margin-bottom: 0;
+        display: none;
+
+        @include breakpoint(PC1200) {
+            display: block;
+        }
+
+        a,
+        a.close {
+            @include breakpoint(PC1200) {
+                display: block;
+                position: relative;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        a.open {
+            background-color: #2498B3;
+        }
+
+        a span {
+            @include breakpoint(PC1200) {
+                display: block;
+                overflow: hidden;
+                width: 1px;
+                height: 1px;
+            }
+        }
+
+        a::after,
+        a.close::after {
+            @include breakpoint(PC1200) {
+                position: absolute;
+                bottom: 15px;
+                left: 14px;
+                content: "";
+                width: $btnWidth;
+                height: $btnHeight;
+                background-color: #2498B3;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
+            }
+        }
+
+        a::before,
+        a.close::before {
+            @include breakpoint(PC1200) {
+                position: absolute;
+                top: 15px;
+                left: 14px;
+                content: "";
+                width: $btnWidth;
+                height: $btnHeight;
+                background-color: #2498B3;
+                transition: 0.2s;
+            }
+        }
+
+        a span::after,
+        a.close span::after {
+            @include breakpoint(PC1200) {
+                position: absolute;
+                top: 24px;
+                left: 14px;
+                content: "";
+                width: $btnWidth;
+                height: $btnHeight;
+                background-color: #2498B3;
+            }
+        }
+
+        a.open::before {
+            @include breakpoint(PC1200) {
+                top: 24px;
+                transform: rotate(-45deg);
+                background-color: #FFFFFF;
+            }
+        }
+
+        a.open::after {
+            @include breakpoint(PC1200) {
+                bottom: 24px;
+                transform: rotate(-135deg);
+                background-color: #FFFFFF;
+            }
+        }
+    }
+
+    &__body {
+        display: block;
+
+        @include breakpoint(PC1200) {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background-color: #FFF;
+        }
+
+        &.open {
+            @include breakpoint(PC1200) {
+              display: block;
+            }
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            
+            @include breakpoint(PC1200) {
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                flex-direction: column;
+            }
+        }
+
+        ul li {
+            position: relative;
+            white-space: nowrap;
+        }
+
+        ul li a {
+            display: flex;
+            padding: 0 15px;
+            height: 70px;
+            -webkit-box-align: center;
+            align-items: center;
+            transition: 0.3s;
+
+            @include breakpoint(PC1260) {
+                padding: 0 10px;
+            }
+
+            @include breakpoint(PC1200) {
+                height: auto;
+                padding: 10px;
+            }
+        }
+
+        ul li a:link {
+            color: #131D34;
+            text-decoration: none;
+        }
+
+        ul li a:visited {
+            color: #131D34;
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            color: #131D34;
+            background-color: #D4F1F8;
+            text-decoration: none;
+
+            @include breakpoint(PC1200) {
+              background-color: #F3FAFB;
+            }
+        }
+
+        ul li a:focus {
+            color: #131D34;
+            background-color: #D4F1F8;
+            text-decoration: none;
+
+            @include breakpoint(PC1200) {
+              background-color: #F3FAFB;
+            }
+        }
+        
+        ul li a:active {
+            color: #131D34;
+            background-color: #D4F1F8;
+            text-decoration: none;
+
+            @include breakpoint(PC1200) {
+              background-color: #F3FAFB;
+            }
+        }
+
+        ul li.Nav__special {
+            @include breakpoint(PC1200) {
+              display: none;
+            }
+        }
+
+        ul li.Nav__special a {
+            background-color: #2498B3;
+        }
+
+        ul li.Nav__special a:link {
+            color: #FFF;
+        }
+        
+        ul li.Nav__special a:visited {
+            color: #FFF;
+        }
+
+        ul li.Nav__special a:hover {
+            color: #FFF;
+        }
+        ul li.Nav__special a:focus {
+            color: #FFF;
+        }
+        ul li.Nav__special a:active {
+            color: #FFF;
+        }
+
+        ul.sub-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            z-index: 1000;
+
+            @include breakpoint(PC1200) {
+                position: static;
+            }
+        }
+
+        ul.sub-menu.close {
+            display: none;
+        }
+
+        ul.sub-menu.open {
+            display: block;
+            position: fixed;
+        }
+        
+        ul.sub-menu li {
+            font-weight: normal;
+            background-color: #E9F8FB;
+
+            @include breakpoint(PC1200) {
+                background-color: #FFF;
+            }
+        }
+
+        ul.sub-menu li a {
+            position: relative;
+            padding: 15px 60px 15px 15px;
+            height: auto;
+
+            @include breakpoint(PC1200) {
+                padding: 10px 10px 10px 25px;
+            }
+        }
+
+        ul.sub-menu li a:hover {
+            color: #2498B3;
+            background-color: #FFF;
+            text-decoration: none;
+
+            @include breakpoint(PC1200) {
+                color: #121212;
+                background-color: #F3FAFB;
+            }
+        }
+
+        ul.sub-menu li a:focus {
+            color: #2498B3;
+            background-color: #FFF;
+            text-decoration: none;
+
+            @include breakpoint(PC1200) {
+                color: #121212;
+                background-color: #F3FAFB;
+            }
+        }
+
+        ul.sub-menu li a:active {
+            color: #2498B3;
+            background-color: #FFF;
+            text-decoration: none;
+
+            @include breakpoint(PC1200) {
+                color: #121212;
+                background-color: #F3FAFB;
+            }
+        }
+    }
+}
+
+.menu-item-has-children {
+    >a {
+        @include breakpoint(PC1200) {   
+            position: relative;
+        }
+
+        &::before {
+            @include breakpoint(PC1200) {   
+                display: block;
+                content: "";
+                position: absolute;
+                top: 50%;
+                right: 13px;
+                width: 24px;
+                height: 2px;
+                margin-top: -1px;
+                background-color: #121212;
+                z-index: 9;
+            }
+        }
+    }
+
+    &.close>a::after { 
+        @include breakpoint(PC1200) {   
+            display: block;
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 24px;
+            width: 2px;
+            height: 24px;
+            margin-top: -12px;
+            background-color: #121212;
+        }
+    }
+
+    &.open>a {
+        @include breakpoint(PC1200) {
+            position: relative;
+        }
+    }
+
+    &.open>a::after {
+        @include breakpoint(PC1200) {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 50px;
+            height: auto;
+            margin-top: 0;
+            background-color: #F7F7F7;
+        }
+    }
+}
+
+.Main {
+    padding-top: 70px;
+
+        @include breakpoint(PC1200) {
+            padding-top: 50px;
+        }
+
+    p {
+        margin-bottom: 1em;
+    }
+}
+
+.main p {
+    margin-bottom: 1em;
+}
+
+.TopHead {
+    position: relative;
+    height: 650px;
+    overflow: hidden;
+    background: transparent url(../images/bg-hero3.png) no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    @include breakpoint(mobile) {
+        height: 300px;
+        padding-bottom: 320px;
+        background-position: center -25px;
+    }
+  
+    &__layer {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+
+        @include breakpoint(mobile) {
+            background-position-y: bottom;
+        }
+
+        &1 {
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-align: start;
+            align-items: flex-start;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding-top: 80px;
+            background: transparent url(../images/bg-hero1.png) no-repeat center center;
+            z-index: 200;
+
+            @include breakpoint(mobile) {
+                background-size: cover;
+                -webkit-box-align: end;
+                align-items: flex-end;
+                background-position: center -30px;
+            }
+        }
+
+        &2 {
+            background: transparent url(../images/bg-hero2.png) no-repeat center center;
+            z-index: 100;
+
+            @include breakpoint(mobile) {
+                background-size: cover;
+                background-position: center -25px;
+            }
+        }
+    }
+
+    &__body {
+            max-width: 530px;
+            border-radius: 10px;
+            padding: 43px 40px 19px 40px;
+            background-color: #FFF;
+            text-align: center;
+        
+        @include breakpoint(mobile) { 
+            width: 100%;
+            max-width: 100%;
+            padding: 9px 0 13px;
+            border-radius: 0;
+        }
+
+        p {
+            margin: 1.3em 0 0.5em;
+            font-weight: 700;
+
+            @include breakpoint(mobile) {
+                margin: 0.5em 0;
+                font-size: 1.3rem;
+            }
+        }
+
+        p.Btn.Btn--big a {
+            padding: 24px 37px;
+            font-size: 18px;
+            font-size: 1.8rem;
+            background-color: #2498B3;
+            border-color: #2498B3;
+
+            @include breakpoint(mobile) {
+                padding: 12px 18px;
+                font-size: 1.6rem;
+            }
+        }
+    }
+
+    &__title img {
+        width: 280px;
+        height: auto;
+
+        @include breakpoint(mobile) {
+            display: none;
+        }
+    }
+}
+
+.Btn {
+    a {
+    padding: 15px 23px;
+    border-radius: 4px;
+    display: block;
+    font-weight: 700;
+    border: solid 1px #C3C3C3;
+    background-color: #FFF;
+    }
+
+    a:visited {
+        color: #121212;
+    }
+
+    &.Btn--big a, button.Btn.Btn--big {
+        padding: 20px 38px;
+    }
+
+    &.Btn--highlight a, button.Btn.Btn--highlight, label.Btn.Btn--highlight {
+        color: #FFF;
+        background-color: #2BB8D9;
+        border-color: #2BB8D9;
+    }
+
+    &.Btn--big a, button.Btn.Btn--big {
+        padding: 20px 38px;
+    }
+
+    &.Btn--highlight a:visited, button.Btn.Btn--highlight:visited, label.Btn.Btn--highlight:visited {
+        color: #FFF;
+        background-color: #2BB8D9;
+        border-color: #2BB8D9;
+    }
+}
+
+.Sec{
+    padding: 4em 0 4em 0;
+
+    &.Sec--black {
+    background-color: #000000;
+    }
+
+    &--recommendation {
+        z-index: 500;
+    }
+
+    &.Sec--nallow {
+        padding: 4em 0;
+    }
+}
+
+.Wrap {
+    margin: 0 auto;
+    max-width: 714px;
+
+    @include breakpoint(mobile) {
+        margin: 0 10px;
+    }
+
+    .Wrap--wide {
+        max-width: 1078px;
+
+        @include breakpoint(tablet) {
+            margin: 0 10px;
+        }
+    }
+}
+
+.Recommendation {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: -263px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #FFF;
+    z-index: 1000;
+
+    @include breakpoint(mobile) {
+        margin-top: 0;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    &__entry {
+        margin: 0 50px;
+        width: 229px;
+
+        @include breakpoint(tablet) {
+            width: 29.33%;
+            margin: 0 2%;
+        }
+
+        @include breakpoint(mobile) {
+            margin-bottom: 2.5em;
+            width: auto;
+        }
+
+        &:last-child {
+            @include breakpoint(mobile) {
+                margin-bottom: 1em;
+            }
+        }
+    }
+
+    &__title {
+        text-align: center;
+
+        .Recommendation__icon {
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            align-items: center;
+            width: 230px;
+            height: 230px;
+            margin: 0 auto;
+            color: #000000;
+            border: solid 6px #000000;
+            border-radius: 50%;
+            background: #FFF;
+            font-size: 100px;
+
+            ::before {
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+            }
+        }
+    
+        p {
+            font-weight: 700;
+            font-size: 24px;
+            font-size: 2.4rem;
+            color: #FFF;
+        }
+    }
+
+    &__body p {
+        margin: 0.5em 0 0 0;
+        line-height: 1.7;
+        font-weight: 700;
+    }
+}
+
+.fa, .fab, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+.fa-fw {
+    text-align: center;
+    width: 1.25em;
+}
+
+.fal {
+    font-weight: 300;
+}
+
+.fal, .far {
+    font-family: "Font Awesome 5 Pro";
+}
+
+.fa-dumbbell:before {
+    content: "\f44b";
+}
+
+.fa-chalkboard-teacher:before {
+    content: "\f51c";
+}
+
+.fa-life-ring:before {
+    content: "\f1cd";
+}
